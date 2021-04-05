@@ -8,21 +8,6 @@ namespace DodoTimer
 {
     class Settings
     {
-        private Settings _Instance;
-
-        private Settings()
-        {
-
-        }
-
-        public void Load()
-        {
-
-        }
-
-        public void Save()
-        {
-
-        }
+        public static string TitleProject = "Учет обедов";
     }
 }

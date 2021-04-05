@@ -18,7 +18,10 @@ namespace DodoTimer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            MainForm tempForm = new MainForm();
+
+            Application.Run(tempForm);
         }
     }
 }

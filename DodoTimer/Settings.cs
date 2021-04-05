@@ -9,5 +9,6 @@ namespace DodoTimer
     class Settings
     {
         public static string TitleProject = "Учет обедов";
+        public static string NameOfDataBase = "DodoTimer.db";
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiteDB;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +10,11 @@ namespace DodoTimer.Models
 {
     class Person
     {
+        [BsonId]
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
-        public List<Dinner> Dinners { get; set; } 
+        public List<Dinner> Dinners { get; set; }
     }
 }

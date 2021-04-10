@@ -30,15 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainGroupBox = new System.Windows.Forms.GroupBox();
-            this.MainGridView = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.MainGrid = new System.Windows.Forms.DataGridView();
             this.MainGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // MainGroupBox
             // 
-            this.MainGroupBox.Controls.Add(this.MainGridView);
+            this.MainGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainGroupBox.Controls.Add(this.MainGrid);
             this.MainGroupBox.Location = new System.Drawing.Point(12, 12);
             this.MainGroupBox.Name = "MainGroupBox";
             this.MainGroupBox.Padding = new System.Windows.Forms.Padding(10, 5, 10, 10);
@@ -46,44 +48,36 @@
             this.MainGroupBox.TabIndex = 0;
             this.MainGroupBox.TabStop = false;
             // 
-            // MainGridView
+            // MainGrid
             // 
-            this.MainGridView.AllowUserToAddRows = false;
-            this.MainGridView.AllowUserToDeleteRows = false;
-            this.MainGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.MainGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MainGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.MainGridView.Location = new System.Drawing.Point(10, 18);
-            this.MainGridView.Margin = new System.Windows.Forms.Padding(0);
-            this.MainGridView.MultiSelect = false;
-            this.MainGridView.Name = "MainGridView";
-            this.MainGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MainGridView.Size = new System.Drawing.Size(740, 409);
-            this.MainGridView.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(778, 30);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.MainGrid.AllowUserToAddRows = false;
+            this.MainGrid.AllowUserToDeleteRows = false;
+            this.MainGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MainGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.MainGrid.Location = new System.Drawing.Point(10, 18);
+            this.MainGrid.Margin = new System.Windows.Forms.Padding(0);
+            this.MainGrid.MultiSelect = false;
+            this.MainGrid.Name = "MainGrid";
+            this.MainGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.MainGrid.Size = new System.Drawing.Size(740, 409);
+            this.MainGrid.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(891, 461);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(781, 461);
             this.Controls.Add(this.MainGroupBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Учет обедов";
             this.MainGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -91,8 +85,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox MainGroupBox;
-        private System.Windows.Forms.DataGridView MainGridView;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView MainGrid;
     }
 }
 

@@ -27,61 +27,91 @@ namespace DodoTimer
 
             mainTable.Columns.Add("Ид", typeof(int));
             mainTable.Columns.Add("Имя", typeof(string));
-            mainTable.Columns.Add("фамилия", typeof(string));
+            mainTable.Columns.Add("Фамилия", typeof(string));
             mainTable.Columns.Add("Отчество", typeof(string));
-
-            using(var db = new LiteDatabase(Settings.NameOfDataBase))
-            {
-                foreach (Person item in db.GetCollection<Person>().Include(x => x.Dinners).FindAll())
-                {
-                    mainTable.Rows.Add(item.Id, item.FirstName, item.LastName, item.MiddleName);
-                }
-            }
-
-            MainGridView.DataSource = mainTable;
 
             ContextMenuStrip mainMenu = new ContextMenuStrip();
 
             ToolStripMenuItem showDinners = new ToolStripMenuItem("Показать обеды");
+            
+            ToolStripMenuItem actionPerson = new ToolStripMenuItem("Персонал");
+            ToolStripMenuItem addPerson = new ToolStripMenuItem("Добавить");
+            ToolStripMenuItem removePerson = new ToolStripMenuItem("Удалить");
+            ToolStripMenuItem editPerson = new ToolStripMenuItem("Редактировать");
 
-            showDinners.Click += delegate
-            {
-                int currentId = (int) MainGridView.SelectedRows[0].Cells[0].Value;
+            ToolStripMenuItem refreshTable = new ToolStripMenuItem("Обновить таблицу");
 
-                using (var db = new LiteDatabase(Settings.NameOfDataBase))
-                {
-                    Person currentPerson = db.GetCollection<Person>().FindById(currentId);
+            actionPerson.DropDownItems.Add(addPerson);
+            actionPerson.DropDownItems.Add(removePerson);
+            actionPerson.DropDownItems.Add(editPerson);
 
-                    currentPerson.Dinners = db.GetCollection<Dinner>().Find(x => x.PersonId == currentId).ToList();
+            showDinners.Click += (sendor, e) => ShowDinners();
 
-                    DinnerForm tempForm = new DinnerForm(currentPerson);
+            addPerson.Click += (sendor, e) => AddPerson();
 
-                    tempForm.ShowDialog();
-                }
-            };
+            removePerson.Click += (sendor, e) => { };
+
+            editPerson.Click += (sendor, e) => { };
+
+            refreshTable.Click += (sendor, e) => RefreshPersons();
 
             mainMenu.Items.Add(showDinners);
+            mainMenu.Items.Add(new ToolStripSeparator());
+            mainMenu.Items.Add(actionPerson);
+            mainMenu.Items.Add(new ToolStripSeparator());
+            mainMenu.Items.Add(refreshTable);
 
-            MainGridView.ContextMenuStrip = mainMenu;
+            MainGrid.DataSource = mainTable;
 
-            MainGridView.Columns[0].Visible = false;
+            MainGrid.Columns[0].Visible = false;
+
+            MainGrid.ContextMenuStrip = mainMenu;
+
+            RefreshPersons();
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddPerson()
         {
             using (var db = new LiteDatabase(Settings.NameOfDataBase))
             {
-                var col = db.GetCollection<Dinner>();
+                var col = db.GetCollection<Person>();
 
-                DateTime not = DateTime.Now;
-
-                col.Insert(new Dinner()
+                col.Insert(new Person()
                 {
-                    EndAt = DateTime.Now.AddMinutes(10),
-                    StartAt = DateTime.Now,
-                    PersonId = 1
+                    FirstName = "Ангелина",
+                    LastName = "Компиянова",
+                    MiddleName = "Сергеевна",
+                    Deleted = false
                 });
             }
+        }
+
+        private void RefreshPersons()
+        {
+            mainTable.Clear();
+
+            using (var db = new LiteDatabase(Settings.NameOfDataBase))
+            {
+                foreach (Person item in db.GetCollection<Person>().Find(x => x.Deleted == false))
+                {
+                    mainTable.Rows.Add(item.Id, item.FirstName, item.LastName, item.MiddleName);
+                }
+            }
+        }
+
+        private void ShowDinners()
+        {
+            if (MainGrid.SelectedRows.Count == 0)
+            {
+                return;
+            }
+
+            int currentId = (int) MainGrid.SelectedRows[0].Cells[0].Value;
+
+            DinnerForm tempForm = new DinnerForm(currentId);
+
+            tempForm.ShowDialog();
         }
     }
 }

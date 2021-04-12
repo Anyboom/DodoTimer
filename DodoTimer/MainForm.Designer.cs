@@ -56,6 +56,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MainGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.MainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.MainGrid.Location = new System.Drawing.Point(10, 18);
@@ -63,8 +64,13 @@
             this.MainGrid.MultiSelect = false;
             this.MainGrid.Name = "MainGrid";
             this.MainGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.MainGrid.ShowEditingIcon = false;
+            this.MainGrid.ShowRowErrors = false;
             this.MainGrid.Size = new System.Drawing.Size(740, 409);
             this.MainGrid.TabIndex = 0;
+            this.MainGrid.ReadOnly = true;
+            this.MainGrid.ShowCellErrors = false;
+            this.MainGrid.ShowCellToolTips = false;
             // 
             // MainForm
             // 

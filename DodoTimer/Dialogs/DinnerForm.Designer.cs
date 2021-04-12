@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DinnerForm));
             this.MainGroupBox = new System.Windows.Forms.GroupBox();
+            this.DateTimeLabel = new System.Windows.Forms.Label();
+            this.mainDatePicker = new System.Windows.Forms.DateTimePicker();
             this.MainGrid = new System.Windows.Forms.DataGridView();
             this.MainStatusMenu = new System.Windows.Forms.StatusStrip();
             this.CountLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -45,6 +47,8 @@
             this.MainGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainGroupBox.Controls.Add(this.DateTimeLabel);
+            this.MainGroupBox.Controls.Add(this.mainDatePicker);
             this.MainGroupBox.Controls.Add(this.MainGrid);
             this.MainGroupBox.Location = new System.Drawing.Point(12, 12);
             this.MainGroupBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
@@ -54,6 +58,22 @@
             this.MainGroupBox.TabIndex = 0;
             this.MainGroupBox.TabStop = false;
             // 
+            // DateTimeLabel
+            // 
+            this.DateTimeLabel.AutoSize = true;
+            this.DateTimeLabel.Location = new System.Drawing.Point(7, 18);
+            this.DateTimeLabel.Name = "DateTimeLabel";
+            this.DateTimeLabel.Size = new System.Drawing.Size(36, 13);
+            this.DateTimeLabel.TabIndex = 2;
+            this.DateTimeLabel.Text = "Дата:";
+            // 
+            // mainDatePicker
+            // 
+            this.mainDatePicker.Location = new System.Drawing.Point(10, 34);
+            this.mainDatePicker.Name = "mainDatePicker";
+            this.mainDatePicker.Size = new System.Drawing.Size(137, 20);
+            this.mainDatePicker.TabIndex = 1;
+            // 
             // MainGrid
             // 
             this.MainGrid.AllowUserToAddRows = false;
@@ -62,14 +82,21 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MainGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.MainGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.MainGrid.Location = new System.Drawing.Point(10, 18);
+            this.MainGrid.Location = new System.Drawing.Point(10, 57);
             this.MainGrid.Margin = new System.Windows.Forms.Padding(0);
             this.MainGrid.MultiSelect = false;
             this.MainGrid.Name = "MainGrid";
+            this.MainGrid.ReadOnly = true;
+            this.MainGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.MainGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MainGrid.Size = new System.Drawing.Size(390, 241);
+            this.MainGrid.ShowCellErrors = false;
+            this.MainGrid.ShowCellToolTips = false;
+            this.MainGrid.ShowEditingIcon = false;
+            this.MainGrid.ShowRowErrors = false;
+            this.MainGrid.Size = new System.Drawing.Size(390, 202);
             this.MainGrid.TabIndex = 0;
             // 
             // MainStatusMenu
@@ -116,6 +143,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Учет обедов";
             this.MainGroupBox.ResumeLayout(false);
+            this.MainGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainGrid)).EndInit();
             this.MainStatusMenu.ResumeLayout(false);
             this.MainStatusMenu.PerformLayout();
@@ -132,5 +160,7 @@
         private System.Windows.Forms.ToolStripStatusLabel CountLabel;
         private System.Windows.Forms.ToolStripStatusLabel NumberCount;
         private System.Windows.Forms.ToolStripStatusLabel MinuteLabel;
+        private System.Windows.Forms.Label DateTimeLabel;
+        private System.Windows.Forms.DateTimePicker mainDatePicker;
     }
 }

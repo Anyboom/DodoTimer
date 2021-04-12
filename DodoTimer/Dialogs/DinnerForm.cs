@@ -42,6 +42,17 @@ namespace DodoTimer
             startDinner.Click += (sendor, e) => StartDinner();
             finishDinner.Click += (sendor, e) => FinishDinner();
 
+            mainDatePicker.ValueChanged += (sender, e) =>
+            {
+                RefreshDinners();
+                RefreshValues();
+            };
+
+            this.Shown += (sender, e) =>
+            {
+                MainGrid.Columns[0].Visible = false;
+            };
+
             mainMenu.Items.Add(startDinner);
             mainMenu.Items.Add(finishDinner);
             mainMenu.Items.Add(new ToolStripSeparator());
@@ -57,7 +68,14 @@ namespace DodoTimer
 
         private void FinishDinner()
         {
-            if(MainGrid.SelectedRows.Count == 0)
+            if (DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year)
+            {
+                MessageService.ShowInfo("Можно взаимодействовать с обедами только в нынешний день.");
+
+                return;
+            }
+
+            if (MainGrid.SelectedRows.Count == 0)
             {
                 return;
             }
@@ -75,7 +93,9 @@ namespace DodoTimer
                     return;
                 }
 
-                temp.EndAt = DateTime.Now;
+                DateTime dateTimeNow = DateTime.Now;
+
+                temp.EndAt = dateTimeNow.AddSeconds(-dateTimeNow.Second);
 
                 col.Update(temp);
 
@@ -90,13 +110,22 @@ namespace DodoTimer
 
         private void StartDinner()
         {
+            if(DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year)
+            {
+                MessageService.ShowInfo("Можно взаимодействовать с обедами только в нынешний день.");
+
+                return;
+            }
+
             using (var db = new LiteDatabase(Settings.NameOfDataBase))
             {
                 var col = db.GetCollection<Dinner>();
 
+                DateTime dateTimeNow = DateTime.Now;
+
                 Dinner temp = new Dinner()
                 {
-                    StartAt = DateTime.Now,
+                    StartAt = dateTimeNow.AddSeconds(-dateTimeNow.Second),
                     PersonId = currentPerson.Id
                 };
 
@@ -112,13 +141,15 @@ namespace DodoTimer
 
             using (var db = new LiteDatabase(Settings.NameOfDataBase))
             {
-                currentPerson.Dinners = db.GetCollection<Dinner>().Find(x => x.PersonId == currentPerson.Id).ToList();
+                //db.GetCollection<Dinner>().DeleteAll();
+                currentPerson.Dinners = db.GetCollection<Dinner>().Find(x => x.PersonId == currentPerson.Id && x.StartAt.Day == mainDatePicker.Value.Day && x.StartAt.Year == mainDatePicker.Value.Year).ToList();
             }
 
             foreach (var dinner in currentPerson.Dinners)
             {
                 mainTable.Rows.Add(dinner.Id, dinner.StartAt.ToString("HH:mm"), dinner.EndAt?.ToString("HH:mm"));
             }
+
         }
 
         private void RefreshValues() {

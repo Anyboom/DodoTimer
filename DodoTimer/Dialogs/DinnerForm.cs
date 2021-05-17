@@ -68,7 +68,7 @@ namespace DodoTimer
 
         private void FinishDinner()
         {
-            if (DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year)
+            if (DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year || DateTime.Now.Month != mainDatePicker.Value.Month)
             {
                 MessageService.ShowInfo("Можно взаимодействовать с обедами только в нынешний день.");
 
@@ -110,7 +110,7 @@ namespace DodoTimer
 
         private void StartDinner()
         {
-            if(DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year)
+            if(DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year || DateTime.Now.Month != mainDatePicker.Value.Month)
             {
                 MessageService.ShowInfo("Можно взаимодействовать с обедами только в нынешний день.");
 
@@ -141,8 +141,7 @@ namespace DodoTimer
 
             using (var db = new LiteDatabase(Settings.NameOfDataBase))
             {
-                //db.GetCollection<Dinner>().DeleteAll();
-                currentPerson.Dinners = db.GetCollection<Dinner>().Find(x => x.PersonId == currentPerson.Id && x.StartAt.Day == mainDatePicker.Value.Day && x.StartAt.Year == mainDatePicker.Value.Year).ToList();
+                currentPerson.Dinners = db.GetCollection<Dinner>().Find(x => x.PersonId == currentPerson.Id && x.StartAt.Day == mainDatePicker.Value.Day && x.StartAt.Year == mainDatePicker.Value.Year && x.StartAt.Month == mainDatePicker.Value.Month).ToList();
             }
 
             foreach (var dinner in currentPerson.Dinners)

@@ -29,6 +29,7 @@ namespace DodoTimer
             mainTable.Columns.Add("Ид", typeof(int));
             mainTable.Columns.Add("Начало", typeof(TimeSpan));
             mainTable.Columns.Add("Конец", typeof(TimeSpan));
+            mainTable.Columns.Add("Всего", typeof(int));
 
             MainGrid.DataSource = mainTable;
 
@@ -102,6 +103,7 @@ namespace DodoTimer
                 currentPerson.Dinners.Add(temp);
 
                 MainGrid.SelectedRows[0].Cells[2].Value = temp.EndAt?.ToString("HH:mm");
+                MainGrid.SelectedRows[0].Cells[3].Value = temp.EndAt.Value.Subtract(temp.StartAt).TotalMinutes;
 
                 RefreshValues();
             }

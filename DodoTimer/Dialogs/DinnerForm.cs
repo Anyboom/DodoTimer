@@ -148,7 +148,7 @@ namespace DodoTimer
 
             foreach (var dinner in currentPerson.Dinners)
             {
-                mainTable.Rows.Add(dinner.Id, dinner.StartAt.ToString("HH:mm"), dinner.EndAt?.ToString("HH:mm"), dinner.EndAt.Value.Subtract(dinner.StartAt).TotalMinutes);
+                mainTable.Rows.Add(dinner.Id, dinner.StartAt.ToString("HH:mm"), dinner.EndAt?.ToString("HH:mm"), (dinner.EndAt.HasValue) ? dinner.EndAt.Value.Subtract(dinner.StartAt).TotalMinutes : 0);
             }
 
         }

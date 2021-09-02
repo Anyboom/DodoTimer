@@ -10,4 +10,4 @@
 
 ## Стек
 
-- NoSql
+- LiteDB

@@ -28,6 +28,7 @@ namespace DodoTimer
             mainTable.Columns.Add("Ид", typeof(int));
             mainTable.Columns.Add("Имя", typeof(string));
             mainTable.Columns.Add("Фамилия", typeof(string));
+            mainTable.Columns.Add("?", typeof(bool));
 
             mainTable.PrimaryKey = new DataColumn[]{ mainTable.Columns[0] };
 
@@ -73,7 +74,10 @@ namespace DodoTimer
 
             MainGrid.ContextMenuStrip = mainMenu;
 
-            RefreshPersons();
+            Timer timer = new Timer();
+            timer.Interval = 500;
+            timer.Tick += (sendor, e) => RefreshPersons();
+            timer.Start();
         }
 
         private void RemovePerson()
@@ -152,14 +156,30 @@ namespace DodoTimer
 
         private void RefreshPersons()
         {
+            int? currentSelectedId = null;
+
+            if (MainGrid.SelectedRows.Count > 0){
+                currentSelectedId = (int) MainGrid.SelectedRows[0].Index;
+            }
+
             mainTable.Clear();
 
             using (var db = new LiteDatabase(Settings.NameOfDataBase))
             {
+                List<Dinner> dinners = db.GetCollection<Dinner>().FindAll().ToList();
+
                 foreach (Person item in db.GetCollection<Person>().Find(x => x.Deleted == false))
                 {
-                    mainTable.Rows.Add(item.Id, item.FirstName, item.LastName);
+                    bool existsPerson = dinners.Any(x => x.PersonId == item.Id && x.StartAt.Day == DateTime.Now.Day && x.EndAt == null);
+
+                    mainTable.Rows.Add(item.Id, item.FirstName, item.LastName, existsPerson);
                 }
+            }
+
+            MainGrid.Sort(MainGrid.Columns[3], ListSortDirection.Descending);
+            if (currentSelectedId != null)
+            {
+                MainGrid.Rows[currentSelectedId.Value].Selected = true;
             }
         }
 

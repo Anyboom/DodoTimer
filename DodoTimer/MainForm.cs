@@ -28,9 +28,18 @@ namespace DodoTimer
             mainTable.Columns.Add("Ид", typeof(int));
             mainTable.Columns.Add("Имя", typeof(string));
             mainTable.Columns.Add("Фамилия", typeof(string));
-            mainTable.Columns.Add("?", typeof(bool));
+            mainTable.Columns.Add("Открыт", typeof(bool));
+            mainTable.Columns.Add("", typeof(string));
 
-            mainTable.PrimaryKey = new DataColumn[]{ mainTable.Columns[0] };
+            MainGrid.CellFormatting += (sender, args) =>
+            {
+                if (args.ColumnIndex == 4 && (bool) MainGrid[3, args.RowIndex].Value)
+                {
+                    args.Value = "Открыт";
+                }
+            };
+
+            mainTable.PrimaryKey = new[]{ mainTable.Columns[0] };
 
             ContextMenuStrip mainMenu = new ContextMenuStrip();
 
@@ -60,6 +69,8 @@ namespace DodoTimer
             this.Shown += (sender, e) =>
             {
                 MainGrid.Columns[0].Visible = false;
+                MainGrid.Columns[3].Visible = false;
+                MainGrid.Columns[4].HeaderText = String.Empty;
             };
 
             mainMenu.Items.Add(showDinners);
@@ -74,10 +85,7 @@ namespace DodoTimer
 
             MainGrid.ContextMenuStrip = mainMenu;
 
-            Timer timer = new Timer();
-            timer.Interval = 500;
-            timer.Tick += (sendor, e) => RefreshPersons();
-            timer.Start();
+            RefreshPersons();
         }
 
         private void RemovePerson()
@@ -150,7 +158,7 @@ namespace DodoTimer
 
                 LogService.Info($"Модель была добавлена: #{returnedPerson.Id} {returnedPerson.FirstName} {returnedPerson.LastName}");
 
-                mainTable.Rows.Add(returnedPerson.Id, returnedPerson.FirstName, returnedPerson.LastName);
+                mainTable.Rows.Add(returnedPerson.Id, returnedPerson.FirstName, returnedPerson.LastName, false, null);
             }
         }
 
@@ -177,6 +185,7 @@ namespace DodoTimer
             }
 
             MainGrid.Sort(MainGrid.Columns[3], ListSortDirection.Descending);
+
             if (currentSelectedId != null)
             {
                 MainGrid.Rows[currentSelectedId.Value].Selected = true;
@@ -197,6 +206,8 @@ namespace DodoTimer
             DinnerForm tempForm = new DinnerForm(currentId);
 
             tempForm.ShowDialog();
+
+            RefreshPersons();
         }
     }
 }

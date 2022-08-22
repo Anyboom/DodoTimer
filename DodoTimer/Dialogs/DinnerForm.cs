@@ -14,9 +14,12 @@ namespace DodoTimer
     {
         private DataTable mainTable;
         private Person currentPerson;
+        public bool NeedRefresh;
 
         internal DinnerForm(int personId)
         {
+            NeedRefresh = false;
+
             InitializeComponent();
 
             mainTable = new DataTable();

@@ -72,13 +72,6 @@ namespace DodoTimer
 
         private void FinishDinner()
         {
-            if (DateTime.Now.Day != mainDatePicker.Value.Day || DateTime.Now.Year != mainDatePicker.Value.Year || DateTime.Now.Month != mainDatePicker.Value.Month)
-            {
-                MessageService.ShowInfo("Можно взаимодействовать с обедами только в нынешний день.");
-
-                return;
-            }
-
             if (MainGrid.SelectedRows.Count == 0)
             {
                 return;
@@ -91,8 +84,20 @@ namespace DodoTimer
                 var col = db.GetCollection<Dinner>();
 
                 Dinner temp = col.FindById(id);
+                
+                if (DateTime.Now > temp.StartAt.AddHours(2))
+                {
+                    MessageService.ShowInfo("Обед можно закрыть в течение двух часов.");
+                    return;
+                }
 
-                if(temp.EndAt != null)
+                if (DateTime.Now < temp.StartAt)
+                {
+                    MessageService.ShowInfo("Обед нельзя закрыть в прошлом.");
+                    return;
+                }
+
+                if (temp.EndAt != null)
                 {
                     return;
                 }

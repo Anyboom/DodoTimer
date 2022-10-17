@@ -84,7 +84,12 @@ namespace DodoTimer
                 var col = db.GetCollection<Dinner>();
 
                 Dinner temp = col.FindById(id);
-                
+
+                if (temp.EndAt != null)
+                {
+                    return;
+                }
+
                 if (DateTime.Now > temp.StartAt.AddHours(2))
                 {
                     MessageService.ShowInfo("Обед можно закрыть в течение двух часов.");
@@ -94,11 +99,6 @@ namespace DodoTimer
                 if (DateTime.Now < temp.StartAt)
                 {
                     MessageService.ShowInfo("Обед нельзя закрыть в прошлом.");
-                    return;
-                }
-
-                if (temp.EndAt != null)
-                {
                     return;
                 }
 

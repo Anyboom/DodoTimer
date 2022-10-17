@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Services;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -175,7 +176,7 @@ namespace DodoTimer
 
                 foreach (Person item in db.GetCollection<Person>().Find(x => x.Deleted == false))
                 {
-                    bool existsPerson = dinners.Any(x => x.PersonId == item.Id && x.StartAt.Day == DateTime.Now.Day && x.EndAt == null);
+                    bool existsPerson = dinners.Any(x => x.PersonId == item.Id && DateService.CheckDate(x.StartAt) && x.EndAt == null);
 
                     mainTable.Rows.Add(item.Id, item.FirstName, item.LastName, existsPerson);
                 }

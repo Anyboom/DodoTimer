@@ -129,8 +129,6 @@ namespace DodoTimer
 
                     col.Update(personForRemove);
 
-                    LogService.Info($"Модель была удалена: #{personForRemove.Id} {personForRemove.FirstName} {personForRemove.LastName}");
-
                     mainTable.Rows.Find(personForRemove.Id).Delete();
                 }
             }
@@ -155,8 +153,6 @@ namespace DodoTimer
             {
                 Person returnedPerson = tempForm.MainPerson;
 
-                LogService.Info($"Модель была изменена: #{returnedPerson.Id} {returnedPerson.FirstName} {returnedPerson.LastName}");
-
                 mainTable.Rows.Find(currentId).SetField(1, returnedPerson.FirstName);
                 mainTable.Rows.Find(currentId).SetField(2, returnedPerson.LastName);
             }
@@ -171,8 +167,6 @@ namespace DodoTimer
             if(result == DialogResult.OK)
             {
                 Person returnedPerson = tempForm.MainPerson;
-
-                LogService.Info($"Модель была добавлена: #{returnedPerson.Id} {returnedPerson.FirstName} {returnedPerson.LastName}");
 
                 mainTable.Rows.Add(returnedPerson.Id, returnedPerson.FirstName, returnedPerson.LastName, false);
             }

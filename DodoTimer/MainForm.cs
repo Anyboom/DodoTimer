@@ -64,9 +64,11 @@ namespace DodoTimer
 
             refreshTable.Click += (sendor, e) => RefreshPersons();
 
+            SearchTextBox.TextChanged += (sender, e) => SearchPersons();
+
             this.Shown += (sender, e) =>
             {
-                MainGrid.Columns[0].Visible = false;
+                MainGrid.Columns[0].Visible = true;
                 MainGrid.Columns[3].Visible = false;
 
                 MainGrid.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -84,6 +86,22 @@ namespace DodoTimer
             MainGrid.ContextMenuStrip = mainMenu;
 
             RefreshPersons();
+        }
+
+        private void SearchPersons()
+        {
+            string searchValue = SearchTextBox.Text;
+
+            int searchInteger = default;
+
+            if (int.TryParse(searchValue, out searchInteger))
+            {
+                mainTable.DefaultView.RowFilter = string.Format("Ид = '{0}'", searchInteger);
+            }
+            else
+            {
+                mainTable.DefaultView.RowFilter = string.Format("Имя LIKE '%{0}%' OR Фамилия LIKE '%{0}%'", searchValue);
+            }
         }
 
         private void RemovePerson()
